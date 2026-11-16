@@ -1,0 +1,14 @@
+nano mightyfakecode.txt
+Run this on lauch
+	Guilds = [Whatever I want lmao]
+	For each guild:
+		connect to wynn api
+		gather each member data
+		store in ext harddrive
+		close
+
+
+In mightybot, gather the data from the set:
+Store each members data. 
+Organize.
+Await till needed

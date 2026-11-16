@@ -1,0 +1,15 @@
+discord.py
+python-dotenv
+matplotlib.pyplot
+numpy
+pandas
+seaborn
+requests
+asyncio
+aiohttp
+json
+io
+os
+processes
+
+

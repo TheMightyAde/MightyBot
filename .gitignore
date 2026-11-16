@@ -1,0 +1,10 @@
+# No Hacking me D:
+.env
+discord.log
+Guilds/
+.venv/
+bin/
+.idea/
+lib/
+lib64
+pyvenv.cfg
