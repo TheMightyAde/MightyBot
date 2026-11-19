@@ -11,5 +11,11 @@ json
 io
 os
 processes
-
+logging
+random
+math
+numpy.core
+pandas._testing
+urllib3.util
+# Some of these are unused currently but will be used later
 
