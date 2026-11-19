@@ -1,5 +1,5 @@
-nano mightyfakecode.txt
-Run this on lauch
+# This is the pseudocode for mightytracker.py
+Run this on launch
 	Guilds = [Whatever I want lmao]
 	For each guild:
 		connect to wynn api
