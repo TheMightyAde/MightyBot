@@ -1,4 +1,5 @@
 # This is the pseudocode for mightytracker.py
+
 Run this on launch
 	Guilds = [Whatever I want lmao]
 	For each guild:
@@ -8,7 +9,5 @@ Run this on launch
 		close
 
 
-In mightybot, gather the data from the set:
-Store each members data. 
-Organize.
-Await till needed
+Then
+	Organize the data by guild and player

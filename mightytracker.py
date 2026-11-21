@@ -1,3 +1,7 @@
+# This will be updated
+
+from APIs.wynncraft import WynnAPI
+
 import os
 import aiohttp
 import asyncio
@@ -55,7 +59,7 @@ guilds = ['ESI', 'BFS']
 async def get_guild_data(guilds):
     api = WynnAPI.get_wynn_api()
     print('Connected to Wynncraft API')
-    dp = Path('/home/themightyade/Desktop/Wynnstats')
+    dp = Path('/home/themightyade/Desktop/Wynnstats') # Can use another path for you
     for guild in guilds:
         try:
             data = await api.get_guild_player(guild)
