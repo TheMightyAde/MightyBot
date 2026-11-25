@@ -1,84 +1,30 @@
-# This will be updated
-
-from APIs.wynncraft import WynnAPI
-
-import os
-import aiohttp
 import asyncio
-import json
-import io
-from dotenv import load_dotenv
-from pathlib import Path
-import tempfile as tf
-load_dotenv()
+from APIs.wynnapi import WynnAPI
 
-wynn_token = os.getenv('WYNN_TOKEN')
-if wynn_token is None:
-    print('ERROR: WYNN API NOT LINKED')
-else:
-    print('token aquired')
-
-api = None
-url_wynn = "https://api.wynncraft.com/v3"
-
-class WynnAPI:
-    url = url_wynn
-    _instance = None
-    _session_lock = asyncio.Lock()
-    def __init__(self,
-                 session: aiohttp.ClientSession,
-                 token: str = wynn_token
-                 ):
-        self.token = token
-        self.session = session
-    @property
-    def closed(self):
-        return self.session.closed
-    @classmethod
-    async def get_wynn_api(cls):
-        async with cls._session_lock:
-            if cls._instance is None or cls._instance.closed:
-                _session = aiohttp.ClientSession()
-                cls._instance = cls(_session)
-            return cls._instance
-    async def close(self):
-        if not self.session.closed:
-            await self.session.close()      
-    async def get_guild_player(self, guild_pref:str):
-        """
-        Returns the data of all the players in a guild as a JSON
-        If get_guild_player(esi), returns all members in ESI."""
-        url = f"{self.url}/guild/prefix/{guild_pref}"
-
-        async with self.session.get(url) as resp:
-            if resp.status != 200:
-                return None
-            guild_data = resp.json()
-            return guild_data
 guilds = ['ESI', 'BFS']
-async def get_guild_data(guilds):
-    api = WynnAPI.get_wynn_api()
-    print('Connected to Wynncraft API')
-    dp = Path('/home/themightyade/Desktop/Wynnstats') # Can use another path for you
-    for guild in guilds:
-        try:
-            data = await api.get_guild_player(guild)
-            if data is None:
-                print(f'ERROR: {guild} does not exist')
-                continue
-            with tf.NamedTemporaryFile(mode = 'w+',
-                                       suffix = '.json',
-                                       encoding = 'utf-8'
-            ) as total_json_file:
-                guild_json = json.dump(data, total_json, indent = 4)
-                guild_json = guild_json.get('members')
-                for i in guild_json.keys():
-                    if i = 'total':
-                        continue
-                    for member in i:
-                        path = dp / member
-                
-                
-        except Exception as e:
-            print(f"ERROR: MY CODE BROKEN. Also {type(e).__name__}: {e}")     
 
+async def track_guild(wynn, guild):
+    g_data = await wynn.get_guild(guild)
+    if g_data is None:
+        raise ValueError(f'{guild} Data has returned as None')
+    ranks = g_data['members']
+    members = []
+    for rank in ranks:
+        if rank == 'total':
+            continue
+        for member in ranks[rank]:
+            members.append(member)
+    return members
+
+async def main():
+    wynn = await WynnAPI.api()
+    if wynn is None:
+        return
+    try:
+        for guild in guilds:
+            print(await track_guild(wynn, guild))
+    finally:
+        await wynn.close()
+
+if __name__ == '__main__':
+    asyncio.run(main())

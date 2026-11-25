@@ -26,26 +26,10 @@ COGS = [
 
 class MightyBot(commands.Bot):
 
-    def __init__(self):
-        super().__init__(
-            command_prefix=commands.when_mentioned,
-            intents=dc.Intents.default()
-        )
-
-        self.api = None
-        self.http_session = None
-
     async def setup_hook(self):
-
-        # Connect to Wynncraft API
-        self.http_session = aiohttp.ClientSession()
-
-        self.api = WynnAPI(
-            self.http_session,
-            token=WYNN_TOKEN
-        )
-
-        print("Wynncraft API initialized!")
+   		# Connect to Wynncraft API
+   		self.api = await WynnAPI.api()
+		print("Wynncraft API initialized!")
 
         # Load cogs
         for extension in COGS:
