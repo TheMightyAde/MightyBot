@@ -25,11 +25,15 @@ COGS = [
 
 
 class MightyBot(commands.Bot):
-
+    def __init__(self):
+        super().__init__(
+            command_prefix=None,
+            intents=dc.Intents.all()
+        )
     async def setup_hook(self):
-   		# Connect to Wynncraft API
-   		self.api = await WynnAPI.api()
-		print("Wynncraft API initialized!")
+        # Connect to Wynncraft API
+        self.api = await WynnAPI.api()
+        print("Wynncraft API initialized!")
 
         # Load cogs
         for extension in COGS:
@@ -37,6 +41,7 @@ class MightyBot(commands.Bot):
             print(f"Loaded: {extension}")
 
         # Sync slash commands
+
         synced = await self.tree.sync()
         print(f"Synced {len(synced)} commands.")
 
@@ -45,9 +50,8 @@ class MightyBot(commands.Bot):
         print("MightyBot is online!")
 
     async def close(self):
-
-        if self.http_session and not self.http_session.closed:
-            await self.http_session.close()
+        if hasattr(self, 'api') and self.api:
+            await self.api.close()
 
         await super().close()
 
@@ -56,3 +60,4 @@ bot = MightyBot()
 
 if __name__ == "__main__":
     bot.run(TOKEN)
+
