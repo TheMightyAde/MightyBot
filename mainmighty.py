@@ -7,6 +7,8 @@ from discord.ext import commands
 from dotenv import load_dotenv
 import aiohttp
 
+# For privacy reasons, logging is not imported
+
 from APIs.wynnapi import WynnAPI
 
 
@@ -27,7 +29,7 @@ COGS = [
 class MightyBot(commands.Bot):
     def __init__(self):
         super().__init__(
-            command_prefix=None,
+            command_prefix="no",
             intents=dc.Intents.all()
         )
     async def setup_hook(self):

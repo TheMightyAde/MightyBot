@@ -1,5 +1,5 @@
 import asyncio
-from APIs.wynnapi import WynnAPI
+from APIs.wynnapi import WynnAPI 
 
 guilds = ['ESI', 'BFS']
 
